@@ -1,7 +1,12 @@
+'use client'
+
+import AddPost from './components/AddPost'
+
 export default function Home() {
   return (
-    <main className='text-rose-300'>
+    <main>
       <h1>Meow</h1>
+      <AddPost />
     </main>
   )
 }
