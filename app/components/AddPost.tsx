@@ -2,22 +2,31 @@
 
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import toast from 'react-hot-toast'
+
+let toastPostID: string //? why it has to be declared as global scope
 
 export default function CreatePost() {
   const [title, setTitle] = useState('')
   const [isDisable, setIsDisable] = useState(false)
-  const queryClient = useQueryClient()
+
+  // let toastPostID: string //? declare here cannot be recognized in toast.error (.success)
 
   // Create a post
   const { mutate } = useMutation(
-    async (title: string) => await axios.post('/api/posts/addPost', { title }),
+    async (title: string) =>
+      await axios.post('/api/posts/addPost', { title }),
     {
       onError: (error) => {
-        console.log(error)
+        console.log('e', toastPostID)
+        if (error instanceof AxiosError)
+          toast.error(error?.response?.data?.message, { id: toastPostID })
+        setIsDisable(false)
       },
       onSuccess: (data) => {
-        console.log(data)
+        console.log('d', toastPostID)
+        toast.success('Post has been made 🔥', { id: toastPostID })
         setTitle('')
         setIsDisable(false)
       }
@@ -27,8 +36,11 @@ export default function CreatePost() {
   const submitPost = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsDisable(true)
+    toastPostID = toast.loading('Creating your post', { id: toastPostID })
+    console.log(toastPostID)
     mutate(title)
   }
+
   return (
     <form onSubmit={submitPost} className='bg-white my-8 p-8 rounded-md'>
       <div className='flex flex-col my-4'>
