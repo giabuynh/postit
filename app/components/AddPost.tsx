@@ -10,6 +10,7 @@ let toastPostID: string //? why it has to be declared as global scope
 export default function CreatePost() {
   const [title, setTitle] = useState('')
   const [isDisable, setIsDisable] = useState(false)
+  const queryClient = useQueryClient()
 
   // let toastPostID: string //? declare here cannot be recognized in toast.error (.success)
 
@@ -25,6 +26,7 @@ export default function CreatePost() {
       },
       onSuccess: (data) => {
         toast.success('Post has been made 🔥', { id: toastPostID })
+        queryClient.invalidateQueries(['posts']) // auto refetch posts
         setTitle('')
         setIsDisable(false)
       }
