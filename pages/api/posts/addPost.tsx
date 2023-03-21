@@ -35,11 +35,9 @@ export default async function handler(
         }
       })
 
-      console.log('yes')
       return res.status(200).json(result)
     }
     catch (err) {
-      console.log('no')
       return res.status(403).json({ err: 'Error has occured when making a post' })
     }
   }
