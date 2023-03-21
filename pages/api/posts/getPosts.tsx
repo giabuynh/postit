@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
 
 import prisma from '../../../prisma/client'
-
-// const prisma = new PrismaClient()
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,6 +12,7 @@ export default async function handler(
       const data = await prisma.post.findMany({
         include: {
           user: true,
+          Comment: true
         },
         orderBy: {
           createdAt: 'desc'
