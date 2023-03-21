@@ -8,13 +8,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+
   if (req.method === 'DELETE') {
     const session = await getServerSession(req, res, authOptions)
     if (!session)
       return res.status(401).json({ message: 'Please sign in to delete a post' })
 
-    const postId = req.body
+    // Delete post
     try {
+      const postId = req.body
       const result = await prisma.post.delete({
         where: {
           id: postId,

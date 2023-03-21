@@ -37,7 +37,7 @@ export default function EditPost({ avatar, id, name, title, Comment }: EditProps
       },
       onSuccess: (data) => {
         toast.success('Post has been deleted', { id: toastDeleteID })
-        setToggle(false);
+        // setToggle(false); // Redundant
         queryClient.invalidateQueries(['my-posts'])
       }
     }
@@ -68,7 +68,7 @@ export default function EditPost({ avatar, id, name, title, Comment }: EditProps
           </button>
         </div>
       </div>
-      {toggle && <Toggle deletePost={deletePost} />}
+      {toggle && <Toggle deletePost={deletePost} setToggle={setToggle} />}
     </>
   )
 }
