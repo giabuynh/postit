@@ -19,13 +19,11 @@ export default function CreatePost() {
       await axios.post('/api/posts/addPost', { title }),
     {
       onError: (error) => {
-        console.log('e', toastPostID)
         if (error instanceof AxiosError)
           toast.error(error?.response?.data?.message, { id: toastPostID })
         setIsDisable(false)
       },
       onSuccess: (data) => {
-        console.log('d', toastPostID)
         toast.success('Post has been made 🔥', { id: toastPostID })
         setTitle('')
         setIsDisable(false)
@@ -37,7 +35,6 @@ export default function CreatePost() {
     e.preventDefault()
     setIsDisable(true)
     toastPostID = toast.loading('Creating your post', { id: toastPostID })
-    console.log(toastPostID)
     mutate(title)
   }
 
