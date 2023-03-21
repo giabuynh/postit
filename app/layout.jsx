@@ -2,7 +2,7 @@ import './globals.css'
 import { Roboto } from 'next/font/google'
 
 import Nav from './auth/Nav'
-import QueryWrapper from './components/QueryWrapper'
+import QueryWrapper from './api/QueryWrapper'
 
 const roboto = Roboto({
   subsets: ['latin'],
