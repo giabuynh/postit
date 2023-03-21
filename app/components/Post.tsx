@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Post({ avatar, comments, id, name, postTitle }) {
+export default function Post({ avatar, id, name, postTitle, comments }) {
   return (
     <div className='bg-white my-8 p-8 rounded-lg'>
       <div className='flex items-center gap-2'>
