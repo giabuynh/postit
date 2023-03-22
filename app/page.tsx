@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import AddPost from './components/AddPost'
 import Post from './components/Post'
-import { PostType } from './types/Post'
+import { PostsType } from './types/Posts'
 
 // Fetch all post
 const allPosts = async () => {
@@ -14,7 +14,7 @@ const allPosts = async () => {
 }
 
 export default function Home() {
-  const { data, error, isLoading } = useQuery<PostType>({
+  const { data, error, isLoading } = useQuery<PostsType>({
     queryFn: allPosts,
     queryKey: ['posts'], // to manage query caching -> not cache post when navigate.
   })

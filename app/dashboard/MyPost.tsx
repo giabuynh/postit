@@ -7,7 +7,6 @@ import EditPost from './EditPost'
 
 const fetchMyPosts = async () => {
   const respones = await axios.get('/api/posts/myPosts')
-
   return respones.data
 }
 
