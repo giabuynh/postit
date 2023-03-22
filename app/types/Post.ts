@@ -1,3 +1,17 @@
+export type CommentType = {
+  createdAt?: string,
+  id: string,
+  postId: string,
+  usesrId: string,
+  message: string,
+  user: {
+    email: string,
+    id: string,
+    image: string,
+    name: string
+  }
+}
+
 export type PostType = {
   id: string,
   title: string,
@@ -8,16 +22,5 @@ export type PostType = {
     image: string,
     name: string
   },
-  Comment: {
-    createdAt?: string,
-    id: string,
-    postId: string,
-    usesrId: string,
-    User: {
-      email: string,
-      id: string,
-      image: string,
-      name: string
-    }[]
-  }
+  Comment: CommentType[]
 }
