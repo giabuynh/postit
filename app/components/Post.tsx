@@ -11,6 +11,8 @@ type Post = {
   comments?: object[]
 }
 
+// TODO: Reaction
+
 export default function Post({ author, avatar, id, title, comments }: Post) {
   return (
     <div className='bg-white my-8 p-8 rounded-lg'>
