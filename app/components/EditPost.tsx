@@ -13,7 +13,7 @@ type EditProps = {
   title: string,
   author: string,
   avatar: string,
-  Comment?: {
+  comments?: {
     id: string,
     postId: string,
     userId: string
@@ -22,7 +22,7 @@ type EditProps = {
 
 let deleteToastId: string
 
-export default function EditPost({ postId, title, author, avatar, Comment }: EditProps) {
+export default function EditPost({ postId, title, author, avatar, comments }: EditProps) {
   const [toggle, setToggle] = useState(false)
 
   // Delete post
@@ -60,7 +60,7 @@ export default function EditPost({ postId, title, author, avatar, Comment }: Edi
         <div className='flex gap-4 cursor-pointer items-center'>
           <Link href={`/post/${postId}`} >
             <p className='text-sm font-bold text-gray-700'>
-              {Comment?.length} Comments
+              {comments?.length} Comments
             </p>
           </Link>
 

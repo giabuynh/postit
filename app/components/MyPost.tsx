@@ -14,14 +14,14 @@ export default function MyPosts() {
 
   return (
     <div>
-      {data?.Post?.map((post) => (
+      {data?.posts?.map((post) => (
         <EditPost
           key={post?.id}
           postId={post?.id}
           avatar={data?.image}
           author={data?.name}
           title={post?.title}
-          Comment={post?.Comment} />
+          comments={post?.comments} />
       ))}
     </div>
   )

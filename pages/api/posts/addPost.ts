@@ -15,7 +15,7 @@ export default async function handler(
 
     const title: string = req.body.title
     const prismaUser = await prisma.user.findUnique({
-      where: { email: session?.user?.email }
+      where: { email: session?.user?.email || '' }
     })
 
     // Validate title
@@ -28,7 +28,7 @@ export default async function handler(
       const result = await prisma.post.create({
         data: {
           title,
-          userId: prismaUser?.id
+          userId: prismaUser?.id || ''
         }
       })
 
