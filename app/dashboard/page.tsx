@@ -2,7 +2,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '../../pages/api/auth/[...nextauth]'
 import { redirect } from 'next/navigation'
 
-import MyPosts from './MyPost'
+import MyPosts from '../components/MyPost'
 
 export default async function Dashboard() {
   const session = await getServerSession(authOptions)
@@ -12,7 +12,7 @@ export default async function Dashboard() {
 
   return (
     <main>
-      <h1 className='text-2xl font-bold'>Welcome back {session?.user?.name}</h1>
+      <h1 className='text-2xl font-bold'>Welcome back {session?.user?.name}!</h1>
       <MyPosts />
     </main>
   )

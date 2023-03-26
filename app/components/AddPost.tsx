@@ -1,42 +1,34 @@
 'use client'
 
+import { AxiosError } from 'axios'
 import { useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
+import { useAddPost } from './hooks/usePost'
 
-let toastPostID: string //? why it has to be declared as global scope
+let postToastId: string //? why it has to be declared as global scope
 
 export default function CreatePost() {
   const [title, setTitle] = useState('')
   const [isDisable, setIsDisable] = useState(false)
-  const queryClient = useQueryClient()
 
   // let toastPostID: string //? declare here cannot be recognized in toast.error (.success)
-
   // Create a post
-  const { mutate } = useMutation(
-    async (title: string) =>
-      await axios.post('/api/posts/addPost', { title }),
-    {
-      onError: (error) => {
-        if (error instanceof AxiosError)
-          toast.error(error?.response?.data?.message, { id: toastPostID })
-        setIsDisable(false)
-      },
-      onSuccess: (data) => {
-        toast.success('Post has been made 🔥', { id: toastPostID })
-        queryClient.invalidateQueries(['posts']) // auto refetch posts
-        setTitle('')
-        setIsDisable(false)
-      }
-    }
-  )
+  const onError = (error: any) => {
+    if (error instanceof AxiosError)
+      toast.error(error?.response?.data?.message, { id: postToastId })
+    setIsDisable(false)
+  }
+  const onSuccess = (data: any) => {
+    toast.success('Post has been made 🔥', { id: postToastId })
+    setTitle('')
+    setIsDisable(false)
+  }
+  const { mutate } = useAddPost({ onError, onSuccess })
 
   const submitPost = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsDisable(true)
-    toastPostID = toast.loading('Creating your post', { id: toastPostID })
+    postToastId = toast.loading('Creating your post', { id: postToastId })
     mutate(title)
   }
 

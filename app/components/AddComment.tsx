@@ -1,45 +1,37 @@
 'use client'
 
 import { useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
+import { useAddComment } from './hooks/useComment'
 
-let toastCommentID: string
+let commentToastId: string
 
-type Comment = {
+type CommentProps = {
   postId: string,
-  message: string
 }
 
-export default function AddComment({ postId }) {
+export default function AddComment({ postId }: CommentProps) {
   const [message, setMessage] = useState('')
   const [isDisable, setIsDisable] = useState(false)
-  const queryClient = useQueryClient()
 
-  const { mutate } = useMutation(
-    async (data: Comment) => axios.post('/api/posts/addComment', { data }),
-    {
-      onError: (error) => {
-        console.log(error)
-        if (error instanceof AxiosError)
-          toast.error(error?.response?.data?.message, { id: toastCommentID })
-        setIsDisable(false)
-      },
-      onSuccess: (data) => {
-        console.log(data)
-        toast.success('Added your comment 👍', { id: toastCommentID })
-        setMessage('')
-        setIsDisable(false)
-        queryClient.invalidateQueries(['detail-post'])
-      }
-    }
-  )
+  // Add comment
+  const onError = (error: any) => {
+    if (error instanceof AxiosError)
+      toast.error(error?.response?.data?.message, { id: commentToastId })
+    setIsDisable(false)
+  }
+  const onSuccess = (data: any) => {
+    toast.success('Added your comment 👍', { id: commentToastId })
+    setMessage('')
+    setIsDisable(false)
+  }
+  const { mutate } = useAddComment({ onError, onSuccess })
 
   const submitComment = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsDisable(true)
-    toastCommentID = toast.loading('Adding your comment', { id: toastCommentID })
+    commentToastId = toast.loading('Adding your comment', { id: commentToastId })
     mutate({ message, postId })
   }
 
@@ -51,7 +43,8 @@ export default function AddComment({ postId }) {
           type='text'
           name='title'
           value={message}
-          className='p-4 text-lg rounded-md my-2'
+          className='p-4 rounded-md my-2'
+          placeholder='Share your opinion'
           onChange={(e) => { setMessage(e.target.value) }}
         />
       </div>
@@ -59,11 +52,11 @@ export default function AddComment({ postId }) {
         <button
           type='submit'
           disabled={isDisable}
-          className='text-sm bg-rose-500 text-white py-2 px-6 rounded-xl disabled:opacity-25'
+          className='text-sm bg-sky-500 text-white py-2 px-6 rounded-xl disabled:opacity-25'
         >
-          Add Comment 🚀
+          Send 🚀
         </button>
-        <p className={`font-bold ${message.length > 300} ? text-red-700 : text-gray-700`}>
+        <p className={`font-bold  ${message.length > 300 ? 'text-red-700' : 'text-gray-700'}`}>
           {`${message.length}/300`}
         </p>
       </div>

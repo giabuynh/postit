@@ -1,39 +1,27 @@
 'use client'
 
-import axios from 'axios'
-import { useQuery } from '@tanstack/react-query'
-
 import AddPost from './components/AddPost'
 import Post from './components/Post'
-import { PostsType } from './types/Posts'
-
-// Fetch all post
-const allPosts = async () => {
-  const response = await axios.get('/api/posts/getPosts')
-  return response.data
-}
+import { PostType } from './components/types/index'
+import { useGetAllPosts } from './components/hooks/usePost'
 
 export default function Home() {
-  const { data, error, isLoading } = useQuery<PostsType>({
-    queryFn: allPosts,
-    queryKey: ['posts'], // to manage query caching -> not cache post when navigate.
-  })
+  const { isLoading, error, data } = useGetAllPosts()
 
   if (error) return error
-  if (isLoading) return 'Loadding...'
-  console.log(data)
+  if (isLoading) return 'Loading...'
 
   return (
     <main>
       <AddPost />
-      {data?.map((post) => (
+      {data?.map((post: PostType) => (
         <Post
           key={post.id}
           id={post.id}
-          name={post.user.name}
+          author={post.user.name}
           avatar={post.user.image}
-          postTitle={post.title}
-          comments={post.Comment} />
+          title={post.title}
+          Comment={post.Comment} />
       ))}
     </main>
   )
