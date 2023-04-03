@@ -18,10 +18,10 @@ export default function Home() {
         <Post
           key={post.id}
           id={post.id}
-          author={post.user.name}
-          avatar={post.user.image}
+          author={post?.user?.name || ''}
+          avatar={post?.user?.image || ''}
           title={post.title}
-          Comment={post.Comment} />
+          comments={post.comments} />
       ))}
     </main>
   )

@@ -10,18 +10,18 @@ export default function MyPosts() {
     <div>Error!!</div>
   )
   if (isLoading) return <h1>Loading...</h1>
-  console.log(data)
+  console.log('Mypost data', data)
 
   return (
     <div>
-      {data?.Post?.map((post) => (
+      {data?.posts?.map((post) => (
         <EditPost
           key={post?.id}
           postId={post?.id}
           avatar={data?.image}
           author={data?.name}
           title={post?.title}
-          Comment={post?.Comment} />
+          comments={post?.comments} />
       ))}
     </div>
   )

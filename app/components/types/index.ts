@@ -24,7 +24,7 @@ export type PostType = {
   updatedAt: string,
   userId: string,
   user?: UserType,
-  Comment?: CommentType[]
+  comments?: CommentType[]
 }
 
 // object in fetch my posts
@@ -34,5 +34,5 @@ export type MyPostType = {
   emailVerified: any,
   image: string,
   name: string,
-  Post: PostType[]
+  posts: PostType[]
 }

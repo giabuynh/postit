@@ -1,7 +1,5 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-import Image from 'next/image'
 import Post from '@/app/components/Post'
 import Comment from '@/app/components/Comment'
 import AddComment from '@/app/components/AddComment'
@@ -20,7 +18,7 @@ export default function PostDetail(url: URL) {
     <div>Error!!</div>
   )
   if (isLoading) return 'Loading...'
-  console.log(data)
+  console.log('Home page data', data)
 
   return (
     <div>
@@ -30,11 +28,11 @@ export default function PostDetail(url: URL) {
         title={data?.title}
         avatar={data?.user?.image}
         author={data?.user?.name}
-        Comment={data?.Comment} />
+        comments={data?.comments} />
 
-      <AddComment postId={data?.id} />
+      <AddComment postId={data?.id || ''} />
 
-      {data?.Comment?.map((comment) => (
+      {data?.comments?.map((comment) => (
         <Comment
           key={comment?.id}
           message={comment?.message}
