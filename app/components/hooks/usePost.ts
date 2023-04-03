@@ -61,3 +61,18 @@ export const useDeletePost = ({ onError, onSuccess }: MutationProps) => {
     }
   )
 }
+
+export const useUpdatePost = ({ onError, onSuccess }: MutationProps) => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    async (data: any) => await axios.put('/api/posts/updatePost', { data }),
+    {
+      onError,
+      onSuccess: () => {
+        onSuccess()
+        queryClient.invalidateQueries(['my-posts'])
+      }
+    }
+  )
+}
