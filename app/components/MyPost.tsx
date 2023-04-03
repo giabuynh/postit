@@ -10,7 +10,7 @@ export default function MyPosts() {
     <div>Error!!</div>
   )
   if (isLoading) return <h1>Loading...</h1>
-  console.log(data)
+  console.log('Mypost data', data)
 
   return (
     <div>

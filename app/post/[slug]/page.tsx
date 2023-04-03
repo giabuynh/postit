@@ -18,7 +18,7 @@ export default function PostDetail(url: URL) {
     <div>Error!!</div>
   )
   if (isLoading) return 'Loading...'
-  console.log(data)
+  console.log('Home page data', data)
 
   return (
     <div>
