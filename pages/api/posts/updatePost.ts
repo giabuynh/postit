@@ -11,31 +11,29 @@ export default async function handler(
 ) {
 
   if (req.method === 'PUT') {
-    console.log('put')
-    const session = await getServerSession(req, res, authOptions)
-    if (!session)
-      return res.status(401).json({ message: 'Please sign in to update a post' })
-
-    console.log(session)
-
     // Update post
     try {
-      // ! Check author
+      const { postId, postTitle } = req?.body?.data
+      const session = await getServerSession(req, res, authOptions)
+      if (!session)
+        return res.status(401).json({ message: 'Please sign in to update a post' })
       const prismaUser = await prisma.user.findUnique({
         where: { email: session?.user?.email || '' }
       })
-      console.log(prismaUser)
-      const { postId, postTitle } = req?.body?.data
+
+      // Validate postTitle
+      if (!postTitle.length)
+        return res.status(403).json({ message: 'Please do not leave this empty' })
+      if (postTitle.length > 300)
+        return res.status(403).json({ message: 'Please write a shorter post' })
+
       const result = await prisma.post.update({
         where: {
-          id: postId || '',
-          usesrId: prismaUser?.user?.id
+          id: postId,
+          userId: prismaUser?.id
         },
         data: {
           title: postTitle
-        },
-        after: {
-
         }
       })
 
