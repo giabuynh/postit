@@ -11,7 +11,22 @@ export const useAddComment = ({ onError, onSuccess }: MutationProps) => {
   const queryClient = useQueryClient()
 
   return useMutation(
-    async (data: CommentProps) => axios.post('/api/posts/addComment', { data }),
+    async (data: CommentProps) => await axios.post('/api/posts/addComment', { data }),
+    {
+      onError,
+      onSuccess: () => {
+        onSuccess()
+        queryClient.invalidateQueries(['detail-post'])
+      }
+    }
+  )
+}
+
+export const useDeleteComment = ({ onError, onSuccess }: MutationProps) => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    async (commentId: string) => await axios.post('/api/posts/deleteComment', { data: commentId }),
     {
       onError,
       onSuccess: () => {
