@@ -52,7 +52,7 @@ export default function AddComment({ postId }: CommentProps) {
         <button
           type='submit'
           disabled={isDisable}
-          className='text-sm bg-sky-500 text-white py-2 px-6 rounded-xl disabled:opacity-25'
+          className='text-sm bg-purple-600 text-white py-2 px-6 rounded-xl disabled:opacity-25'
         >
           Send 🚀
         </button>
