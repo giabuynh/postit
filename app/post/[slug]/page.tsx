@@ -18,7 +18,6 @@ export default function PostDetail(url: URL) {
     <div>Error!!</div>
   )
   if (isLoading) return 'Loading...'
-  console.log('Home page data', data)
 
   return (
     <div>
@@ -32,14 +31,17 @@ export default function PostDetail(url: URL) {
 
       <AddComment postId={data?.id || ''} />
 
-      {data?.comments?.map((comment) => (
-        <Comment
-          key={comment?.id}
-          message={comment?.message}
-          author={comment?.user?.name}
-          avatar={comment?.user?.image}
-          createdAt={comment?.createdAt} />
-      ))
+      {
+        data?.comments?.map((comment) => (
+          <Comment
+            key={comment?.id}
+            commentId={comment?.id}
+            message={comment?.message}
+            author={comment?.user?.name}
+            avatar={comment?.user?.image}
+            createdAt={comment?.createdAt}
+          />
+        ))
       }
     </div >
   )

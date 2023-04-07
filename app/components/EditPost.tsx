@@ -6,8 +6,6 @@ import React, { useState } from 'react'
 import { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
-import { default as EditToggle } from './modals/EditPost'
-import { default as DeleteToggle } from './modals/DeletePost'
 import { useDeletePost, useUpdatePost } from './hooks/usePost'
 import Toggle from './modals/Toggle'
 
@@ -98,10 +96,11 @@ export default function EditPost({ postId, title, author, avatar, comments }: Ed
       </motion.div>
       {
         toggle && <Toggle
+          target='post'
           toggleType={toggleType}
           action={toggleType === 'del' ? deletePost : editPost}
           setToggle={setToggle}
-          data={data} />
+          data={toggleType === 'edit' && data} />
       }
     </>
   )

@@ -1,5 +1,6 @@
 'use client'
 
+import { GoHeart } from 'react-icons/go'
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,7 +12,7 @@ type Post = {
   comments?: object[]
 }
 
-// TODO: Reaction
+// TODO: Reaction post
 
 export default function Post({ author, avatar, id, title, comments }: Post) {
   return (
@@ -33,6 +34,7 @@ export default function Post({ author, avatar, id, title, comments }: Post) {
             {comments?.length} Comments
           </p>
         </Link>
+        {/* <GoHeart className='text-red-500 text-xl' /> */}
       </div>
     </div>
   )
