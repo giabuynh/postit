@@ -21,7 +21,7 @@ export default async function handler(
       return res.status(200).json(data)
     }
     catch (err) {
-      return res.status(403).json({ err: 'Error has occured when fetching posts' })
+      return res.status(403).json({ message: 'Error has occured when fetching posts' })
     }
   }
 }

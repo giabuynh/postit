@@ -38,7 +38,7 @@ export default async function handler(
       return res.status(200).json(result)
     }
     catch (err) {
-      return res.status(403).json({ err: 'Error has occured when updating a post' })
+      return res.status(403).json({ message: 'Error has occured when updating a post' })
     }
   }
 }
