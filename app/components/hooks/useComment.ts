@@ -26,7 +26,7 @@ export const useDeleteComment = ({ onError, onSuccess }: MutationProps) => {
   const queryClient = useQueryClient()
 
   return useMutation(
-    async (commentId: string) => await axios.post('/api/posts/deleteComment', { data: commentId }),
+    async (commentId: string) => await axios.delete('/api/comments/deleteComment', { data: commentId }),
     {
       onError,
       onSuccess: () => {

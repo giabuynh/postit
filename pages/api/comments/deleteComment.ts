@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../auth/[...nextauth]'
 
 import prisma from '../../../prisma/client'
-import { Prisma } from '@prisma/client'
 
 export default async function handler(
   req: NextApiRequest,
