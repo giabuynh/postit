@@ -3,6 +3,7 @@
 import { GoHeart } from 'react-icons/go'
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 type Post = {
   id?: string,

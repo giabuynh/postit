@@ -8,19 +8,26 @@ import Toggle from './modals/Toggle'
 import { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 import { useDeleteComment } from './hooks/useComment'
+import { useSession } from 'next-auth/react'
 
 type CommentProps = {
   commentId: string,
   message: string,
-  author?: string,
-  avatar?: string,
+  author?: {
+    email: string,
+    emailVerified: boolean,
+    name: string,
+    id: string,
+    image: string
+  },
   createdAt: string
 }
 
 let toastId: string
 
-export default function Comment({ commentId, message, author, avatar, createdAt }: CommentProps) {
+export default function Comment({ commentId, message, author, createdAt }: CommentProps) {
   const [toggle, setToggle] = useState(false)
+  const { data: session } = useSession()
 
   const onError = (error: any) => {
     if (error instanceof AxiosError)
@@ -40,19 +47,22 @@ export default function Comment({ commentId, message, author, avatar, createdAt 
   return (
     <>
       <div key={commentId} className='relative my-6 p-8 bg-white rounded-md'>
-        <div className='absolute top-0 right-0 m-3'>
-          <BsXLg
-            className='text-gray-400 text-xs cursor-pointer'
-            onClick={() => setToggle(true)}
-          />
-        </div>
+        {
+          session && session.user?.email === author?.email &&
+          < div className='absolute top-0 right-0 m-3'>
+            <BsXLg
+              className='text-gray-400 text-xs cursor-pointer'
+              onClick={() => setToggle(true)}
+            />
+          </div>
+        }
         <div className='flex items-center gap-2'>
-          <Image width={24} height={24} src={avatar || ''} alt='avatar' />
-          <h3 className='font-bold'>{author}</h3>
+          <Image width={24} height={24} src={author?.image || ''} alt='avatar' />
+          <h3 className='font-bold'>{author?.name}</h3>
           <h2 className='text-sm text-gray-500'>{format(Date.parse(createdAt), 'hh:mm:ss dd-MM-yyyy')}</h2>
         </div>
         <div className='py-4'>{message}</div>
-      </div>
+      </div >
       {
         toggle &&
         <Toggle

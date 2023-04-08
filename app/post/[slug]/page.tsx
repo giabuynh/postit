@@ -37,8 +37,7 @@ export default function PostDetail(url: URL) {
             key={comment?.id}
             commentId={comment?.id}
             message={comment?.message}
-            author={comment?.user?.name}
-            avatar={comment?.user?.image}
+            author={comment?.user}
             createdAt={comment?.createdAt}
           />
         ))
